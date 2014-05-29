@@ -1,0 +1,82 @@
+% Created 2014-04-24 Thu 15:12
+\documentclass[work,subfig,biblatex]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{WMSN 深度学习小组讨论会记录}
+\author{Yalong Zhao}
+\date{\today}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+\vspace*{1cm}
+
+\section{陈超学-EBLearn讲解 \textit{2014-04-23 Wed 21:27}}
+\label{sec-1}
+
+本次讨论会持续一个小时，主要由陈超学讲解EBLearn框架的结构以及使用方法，
+详情内容（以及以下报告中设计的函数以及参数名字）请参考上传的 \href{file://.陈超学-eblearn.ppt}{陈超学-eblearn.ppt} 和 \href{file://.陈超学-eblearn报告.doc}{陈超学-eblearn报告.doc} 文件。
+
+下面主要列出本次会议上重点讨论的几个问题：
+\begin{itemize}
+\item \textbf{EBLearn框架数据库}
+
+  根据超学的讲解，我们重点讨论了EBLearn数据库的格式及内容: EBLearn通过自
+  己的函数，由前景及背景图像生成EBLearn训练测试数据库，为.mat格式。其中
+  对于merge和split的作用不是很明确，通过讨论猜测应该是在做正负样本的随机
+  排序和抽取验证数据的作用。
+
+
+\begin{center}
+\begin{tabular}{l}
+ Q1： 正负/多类别样本随机排序的作用是什么？   \\
+\hline
+ Q2： 验证数据（face+bg\_val）的作用是什么？  \\
+\end{tabular}
+\end{center}
+
+
+\end{itemize}
+
+
+\begin{itemize}
+\item \textbf{EBLearn网络参数设置}
+  
+  此部分超学给出了他自己修改的一个例子，从例子来看，EBLearn的网络参数
+  设置并不简单，很多参数需要弄明白代表的具体含义以及背后的数学背景。
+  
+  讨论了报告中
+  \emph{conv2\_stride=1x1 conv2\_table\_in=108 conv2\_table\_out=200}
+  等参数的含义。经过讨论仍有些不确定，需要查找资料进行验证。
+\item \textbf{EBLearn的训练及测试}
+  
+  只要上一部分网络参数设置好，此步并不复杂。但对于bootstrap步骤细节仍
+  然不太明白：
+
+  \emph{由于训练时只是采用了目标数据和非目标数据的随机采样训练的权值还有待完善，并非完整的非目标数据会导致假阳问题，对于检测中的假阳问题可以通过eblearn里的bootstrap步骤完成，用完整（并非部分采样的图像块）的非目标数据训练网络，改变网络的错误检测实现网络检测分类目的。}
+\end{itemize}
+以上为本次讨论的主要内容。
+
+\end{document}

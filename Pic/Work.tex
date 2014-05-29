@@ -1,0 +1,265 @@
+% Created 2014-04-23 Wed 23:42
+\documentclass[CJK]{cctart}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{Work}
+\author{Yalong Zhao}
+\date{\today}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+\vspace*{1cm}
+
+\section{Internship in Panasonic, Singapore}
+\label{sec-1}
+\subsection{NEC implement}
+\label{sec-1-1}
+\subsubsection{Introduction}
+\label{sec-1-1-1}
+
+NEC implement project is based on the paper ``\href{http://arxiv.org/pdf/1212.6094v1.pdf}{Large Scale Strongly Supervised Ensemble Metric Learning, with Applications to Face Verification and Retrieval}'' wrote by Chang Huang, Shenghuo Zhu and Kai Yu NEC
+laboratories. This NEC paper is about one success frame for face
+recognition.
+\subsubsection{Goal}
+\label{sec-1-1-2}
+
+\begin{itemize}
+\item Run the Matlab code write by Zhen Wei.
+\item Write the C++ version of NEC paper.
+\item Implement the CMD feature descriptor.
+\item Understand why this framework performance good on face recognition.
+\item Integrate the good feature of NEC framework into company method.
+\end{itemize}
+\subsubsection{Completed}
+\label{sec-1-1-3}
+
+\begin{enumerate}
+\item Run some test based on Matlab code, get some results.
+
+   For the origin setting in paper, they followed the ``unrestricted
+   configuration'' that allows authors to use the identity information of
+   training data and choose the ``aligned'' version of LFW\footnote{Labeled faces in the Wild, the link is
+\end{enumerate}
+\href{http://vis-www.cs.umass.edu/lfw/}{http://vis-www.cs.umass.edu/lfw/}.
+ }. The
+   database contains 10 folds, every folds contains 600 pairs face
+   images, 9 folds for training and remain 1 fold for testing.
+   
+   In the paper's experiments, 13260 rectangular regions of size
+   varying from \texttt{8*8} to \texttt{96*144} are enumerated within the \texttt{110*150}
+   region. Each rectangular region defines a covariance matrix
+   descriptor and a SLBP descriptor; every descriptor is whitened on
+   training data by PCA; top 45 dimensions of SLBP descriptors are
+   preserved. Eventually, each face image is represented by 13260
+   covariance matrix descriptors and 13260 SLBP descriptors, each of
+   45 dimensions constituting a feature group.
+   
+   \textbf{But for my experiments, because the program is too slow, I changed the 13260 blocks to 678, which contain the important    position of face: eyes, nose, mouse and big face rectangular.}
+
+   \emph{Results of experiments:}
+
+\begin{center}
+\begin{tabular}{rrrrll}
+ No.  &  Train Num  &   mu  &  Block Num  &  Accuracy  &  Cost Time     \\
+\hline
+   1  &         20  &  100  &        687  &  61.50\%   &  2 hours       \\
+   2  &         20  &  200  &        687  &  64.50\%   &  6 hours       \\
+   3  &         20  &  300  &        687  &  65.00\%   &  12 hours      \\
+   4  &         50  &  100  &        687  &  64.50\%   &  8 hours       \\
+   5  &         50  &  200  &        687  &  65.50\%   &  26 hours      \\
+   6  &        100  &  200  &        687  &  68.00\%   &  About 1 week  \\
+\end{tabular}
+\end{center}
+
+
+
+\begin{enumerate}
+\item Implement the CMD descriptor in Matlab version, but seems
+   something error.
+\item Rewrite the algorithm use C++.
+\item Test the GPU, OpenMP, Eigen and OpenCV for solving the eigen value problem.
+\end{enumerate}
+\subsubsection{Schedule}
+\label{sec-1-1-4}
+\begin{itemize}
+
+\item \textbf{CANCELLED} Solve the problem of CMD descriptor. \textbf{:NEC:CANCELLED:}\\
+\label{sec-1-1-4-1}%
+\texttt{DEADLINE:} \textit{2014-02-28 Fri} \texttt{SCHEDULED:} \textit{2014-02-07 Fri}
+
+The Matlab version CMD descriptor has some problems, more train
+images leads to low accuracy. I need find out the result.
+
+Why cancelled: I have to back to China, the work of internship is finished.
+
+
+\item \textbf{DONE} Write C++ version of CMD descriptor. \textbf{:NEC:}\\
+\label{sec-1-1-4-2}%
+\texttt{DEADLINE:} \textit{2014-02-11 Tue} \texttt{SCHEDULED:} \textit{2014-02-07 Fri}
+
+For the C++ version of NEC implement, it just contains the ULBP
+feature, I need add the CMD feature.
+
+
+\item \textbf{DONE} Find the error of why C++ version ULBP is so slow? \textbf{:NEC:}\\
+\label{sec-1-1-4-3}%
+\texttt{DEADLINE:} \textit{2014-02-28 Fri} \texttt{SCHEDULED:} \textit{2014-02-10 Mon}
+
+The C++ version of NEC implement used ULBP feature runs very slow,
+about update to the 30 blocks the program begin very very slow.
+
+Result: It is because the eigen decomposition is too slow in Eigen,
+so after 100 , the matrix is 4500*4500, need very long time.
+
+
+\item \textbf{CANCELLED} Test the MAGMA CUDA library. \textbf{:NEC:CANCELLED:}\\
+\label{sec-1-1-4-4}%
+\texttt{DEADLINE:} \textit{2014-02-17 Mon} \texttt{SCHEDULED:} \textit{2014-02-12 Wed}
+
+If I want to use CUDA for speeding up the C++ version program, I need
+to find a C++ CUDA matrix computation library, especially for solving
+the eigen value problem.
+
+Why cancelled: I have to back to China, the work of internship is finished.
+
+
+\item \textbf{DONE} Add the OpenMP in C++ NEC implement. \textbf{:NEC:}\\
+\label{sec-1-1-4-5}%
+\texttt{DEADLINE:} \textit{2014-02-28 Fri} \texttt{SCHEDULED:} \textit{2014-02-10 Mon}
+
+According my test, the OpenMp is useful for speeding up the program,
+but for calculating the eigen value, how to use OpenMP to speed up?
+
+\end{itemize} % ends low level
+\subsection{Face Point Localization}
+\label{sec-1-2}
+
+Face Point Localization project is main about use web camera to
+detect the landmarks on face, then use the information of eye gaze to
+utilize some applications, such as zoom in or out, video play and
+games.
+\subsection{Face Identification}
+\label{sec-1-3}
+\subsubsection{Introduction}
+\label{sec-1-3-1}
+
+Face Identification project aim to label the name of actor/actress on
+the scene of one video. This project is cooperate with NUS Prof.Yan's
+student @Luoqi and @Junshi.
+
+For me and now, I need to help them find more data for training.
+\subsubsection{Goal}
+\label{sec-1-3-2}
+\label{ecbc34be-f033-4ce4-9b44-6f63c2a441a5}
+
+\begin{itemize}
+\item Label the actor/actress's name in high accuracy.
+\item Find more videos from YouTube.
+\item Find more DVDs which is high quality data from Rokutan and Amazon.
+\item Help them to label the face.
+\item Received Junshi's face identification source code.\textit{2014-02-17 Mon}
+\item I need do the rest train and test myself.
+\end{itemize}
+\subsubsection{Completed}
+\label{sec-1-3-3}
+
+Find 281 videos from YouTube and helped them to label the face position.
+\subsubsection{Schedule}
+\label{sec-1-3-4}
+\begin{itemize}
+
+\item \textbf{DONE} Now is searching the DVDs. \textbf{:Face\_Identification:}\\
+\label{sec-1-3-4-1}%
+\texttt{DEADLINE:} \textit{2014-02-21 Fri}
+
+
+\item \textbf{DONE} Ask Shen about DVDs on TaoBao. \textbf{:Face\_Identification:}
+\label{sec-1-3-4-2}%
+
+\item \textbf{DONE} Buy the first 3 person's DVDs to test if these videos can be used. \textbf{:Face\_Identification:}\\
+\label{sec-1-3-4-3}%
+\texttt{DEADLINE:} \textit{2014-02-07 Fri} \texttt{SCHEDULED:} \textit{2014-02-07 Fri}
+
+
+\item \textbf{DONE} Make sure if I need to buy the DVDs from Nex in Searengoon. \textbf{:Face\_Identification:}\\
+\label{sec-1-3-4-4}%
+\texttt{DEADLINE:} \textit{2014-02-07 Fri} \texttt{SCHEDULED:} \textit{2014-02-07 Fri}
+
+
+\item \textbf{DONE} Go to Nex to buy the Jap DVDs. \textbf{:Face\_Identification:}\\
+\label{sec-1-3-4-5}%
+\texttt{DEADLINE:} \textit{2014-02-09 Sun} \texttt{SCHEDULED:} \textit{2014-02-08 Sat}
+
+
+\item \textbf{DONE} Print the actor name list both in Jp and En. \textbf{:Face\_Identification:}\\
+\label{sec-1-3-4-6}%
+\texttt{DEADLINE:} \textit{2014-02-07 Fri} \texttt{SCHEDULED:} \textit{2014-02-07 Fri}
+
+
+\item \textbf{DONE} Write the Payment Voucher for buying the DVDs from Nex.\\
+\label{sec-1-3-4-7}%
+\texttt{SCHEDULED:} \textit{2014-02-10 Mon}
+
+
+\item \textbf{DONE} Test Junshi's code. Add on \textit{2014-02-17 Mon} \textbf{:Face\_Identification:}
+\label{sec-1-3-4-8}%
+
+\item \textbf{DONE} Build the dataset based on DVD. Add on \textit{2014-02-17 Mon}\textbf{:Face\_Identification:}
+\label{sec-1-3-4-9}%
+
+\item \textbf{DONE} Train the new mode based on new database. Add on \textit{2014-02-17 Mon} \textbf{:Face\_Identification:}
+\label{sec-1-3-4-10}%
+\end{itemize} % ends low level
+\subsection{Work trivia}
+\label{sec-1-4}
+\subsubsection{\textbf{DONE} Fill the PRDCSG Target Plan and Skill Up Plan System.}
+\label{sec-1-4-1}
+\label{9cc1900b-38f1-4170-9f4d-5d7fe7e1e7da}
+
+    \texttt{DEADLINE:} \textit{2014-02-19 Wed} \texttt{SCHEDULED:} \textit{2014-02-12 Wed}
+\subsubsection{\textbf{DONE} Write the year report slides.}
+\label{sec-1-4-2}
+\label{30b49261-ad0c-4573-af40-5b3d52844df0}
+
+    \texttt{DEADLINE:} \textit{2014-02-12 Wed} \texttt{SCHEDULED:} \textit{2014-02-11 Tue}
+\subsubsection{\textbf{DONE} ISG talk.}
+\label{sec-1-4-3}
+\label{b16d4f66-6ea8-46dc-b2bc-5e7f7652e49d}
+
+    \texttt{SCHEDULED:} \textit{2014-03-07 Fri}
+\subsubsection{\textbf{DONE} Label data for JK.}
+\label{sec-1-4-4}
+\label{1bbcfacc-6103-4979-893e-ada40e295d3b}
+
+    \texttt{SCHEDULED:} \textit{2014-02-26 Wed}
+\subsubsection{\textbf{DONE} Install Ubuntu on new hard disk, and test CNN and CUDA environment.}
+\label{sec-1-4-5}
+\label{d361d334-f20c-49d8-bf50-84f8ebd99bad}
+\section{Master graduate thsis}
+\label{sec-2}
+\subsection{Master-Degree Proposal}
+\label{sec-2-1}
+
+\end{document}

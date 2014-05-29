@@ -2,7 +2,8 @@ title:            Faysir's blog.
 description:      Organize my life.
 disqus_shortname: 
 #Your site's domain goes here. Leave localhost server or blank when working locally.
-url:              http://localhost:4000
+#url:              http://localhost:4000
+url:               http://faysir.github.io
 
 # Owner/author information
 owner:
